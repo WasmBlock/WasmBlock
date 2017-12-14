@@ -2,7 +2,7 @@ use std::ffi::{CString, CStr};
 use std::os::raw::{c_char};
 
 #[macro_export]
-macro_rules! setup {
+macro_rules! wasmblock_setup {
     () => {
         #[no_mangle]
         pub extern fn alloc(size: usize) -> *mut c_void {

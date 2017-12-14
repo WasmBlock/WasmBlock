@@ -16,12 +16,12 @@ fn export_string<T:Into<std::vec::Vec<u8>>>(s:T) -> *const c_char{
 }
 
 extern {
-    fn console_log(x: *const c_char);
+    fn wasmblock_console_log(x: *const c_char);
 }
 
 #[no_mangle]
 pub fn start() -> () {
     unsafe {
-        console_log(export_string("Hello World!"));
+        wasmblock_console_log(export_string("Hello World!"));
     }
 }

@@ -16,8 +16,8 @@ fn export_string<T:Into<std::vec::Vec<u8>>>(s:T) -> *const c_char{
 }
 
 extern {
-    fn console_log(x: *const c_char);
-    fn timing_set_timeout(x: *const c_char,milliseconds:i32);
+    fn wasmblock_console_log(x: *const c_char);
+    fn wasmblock_timing_set_timeout(x: *const c_char,milliseconds:i32);
 }
 
 #[no_mangle]
@@ -28,8 +28,8 @@ pub fn start() -> () {
 #[no_mangle]
 pub fn run() -> () {
     unsafe {
-        console_log(export_string("Running"));
+        wasmblock_console_log(export_string("Running"));
         //call yourself in 1000 seconds
-        timing_set_timeout(export_string("run"),1000);
+        wasmblock_timing_set_timeout(export_string("run"),1000);
     }
 }

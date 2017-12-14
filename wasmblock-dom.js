@@ -1,5 +1,5 @@
 WasmBlock((module) => ({
-  dom_create_element: function(targetPtr,elPtr, idPtr) {
+  wasmblock_dom_create_element: function(targetPtr,elPtr, idPtr) {
     let targetName = module.$copyCStr(targetPtr);
     let elementType = module.$copyCStr(elPtr);
     let id = module.$copyCStr(idPtr);
@@ -7,18 +7,18 @@ WasmBlock((module) => ({
     el.setAttribute('id',id);
     document.querySelector(targetName).append(el);
   },
-  dom_set_attribute: function(targetPtr,attrPtr,valPtr) {
+  wasmblock_dom_set_attribute: function(targetPtr,attrPtr,valPtr) {
     let targetName = module.$copyCStr(targetPtr);
     let attrName = module.$copyCStr(attrPtr);
     let val = module.$copyCStr(valPtr);
     document.querySelector(targetName).setAttribute(attrName,val);
   },
-  dom_set_inner_html: function(targetPtr,htmlPtr) {
+  wasmblock_dom_set_inner_html: function(targetPtr,htmlPtr) {
     let targetName = module.$copyCStr(targetPtr);
     let html = module.$copyCStr(htmlPtr);
     document.querySelector(targetName).innerHTML = html;
   },
-  dom_add_event_listener: function(targetPtr,eventPtr,callbackPtr) {
+  wasmblock_dom_add_event_listener: function(targetPtr,eventPtr,callbackPtr) {
     let targetName = module.$copyCStr(targetPtr);
     let eventName = module.$copyCStr(eventPtr);
     let callbackName = module.$copyCStr(callbackPtr);
