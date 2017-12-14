@@ -159,8 +159,8 @@ extern {
 
 ```rust
 extern {
-    fn request_animation_frame(fnName: *const c_char);
-    fn set_timeout(fnName: *const c_char, milliseconds:i32);
+    fn timing_request_animation_frame(fnName: *const c_char);
+    fn timing_set_timeout(fnName: *const c_char, milliseconds:i32);
 }
 ```
 
