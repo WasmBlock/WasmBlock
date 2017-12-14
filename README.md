@@ -67,7 +67,7 @@ rustc +nightly --target wasm32-unknown-unknown -O --crate-type=cdylib helloworld
 shoutworld.js
 ```javascript
 WasmBlock((module) => ({
-  alert: function(strPtr) {
+  shout: function(strPtr) {
     let result = module.$copyCStr(strPtr);
     window.alert(result);
   }
@@ -107,13 +107,13 @@ pub extern "C" fn dealloc_str(ptr: *mut c_char) {
 
 // An api function exposed by wasmblock-alert.js
 extern {
-    fn alert(x: *const c_char);
+    fn shout(x: *const c_char);
 }
 
 #[no_mangle]
 pub fn start() -> () {
     unsafe {
-        alert(export_string("Hello World!!!"));
+        shout(export_string("Hello World!!!"));
     }
 }
 ```
