@@ -1,7 +1,7 @@
 # What's the purpose of this?
 > Expose web api libraries as plugins in a way that is easy for Rust developers
 
-# Why is Web Assembly is hard for Rust developers
+# Why might Web Assembly be hard for Rust developers
 * For many Javascript may not be their primary language
 * Talking with Javascript from Rust can be unintuitive. Rust might not deallocate what it exports, and if so Javascript must deallocate it when it is done with what it has received.
 * Making websites that use only what you need is important
