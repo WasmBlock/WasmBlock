@@ -68,6 +68,7 @@ shoutworld.js
 ```javascript
 WasmBlock((module) => ({
   shout: function(strPtr) {
+    // Copying string out of memory calls dealloc_str in web assembly
     let result = module.$copyCStr(strPtr);
     window.alert(result);
   }
