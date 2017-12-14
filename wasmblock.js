@@ -7,7 +7,7 @@
     // polyfill the platform!
     var e = document.createElement('script');
     e.src = 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.20/webcomponents-loader.js';
-    document.body.appendChild(e);
+    document.head.appendChild(e);
   }
 })();
 
@@ -16,7 +16,7 @@ var WasmBlock = function(f){
 }
 WasmBlock.extensions = [];
 
-(function(){
+window.addEventListener("load",function(){
 
 function fetchAndInstantiate(url, importObject) {
   return fetch(url).then(response =>
@@ -132,4 +132,4 @@ class WasmModule extends HTMLElement {
 customElements.define("wasm-module", WasmModule);
 
 
-})()
+});
