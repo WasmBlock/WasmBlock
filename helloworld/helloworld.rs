@@ -2,7 +2,7 @@ use std::ffi::CString;
 use std::os::raw::{c_char};
 
 #[no_mangle]
-pub extern "C" fn dealloc_str(ptr: *mut c_char) {
+pub fn dealloc_str(ptr: *mut c_char) {
     unsafe {
         let _ = CString::from_raw(ptr);
     }
