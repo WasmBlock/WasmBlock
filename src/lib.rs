@@ -1,7 +1,7 @@
 use std::ffi::{CString, CStr};
 use std::os::raw::{c_char};
-mod console;
-mod dom;
+pub mod console;
+pub mod dom;
 
 #[macro_export]
 macro_rules! wasmblock_setup {
