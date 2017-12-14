@@ -117,7 +117,7 @@ extern {
 #[no_mangle]
 pub fn start() -> () {
     unsafe {
-        alert(export_string("Hello World!"));
+        alert(export_string("Hello World!!!"));
     }
 }
 ```
