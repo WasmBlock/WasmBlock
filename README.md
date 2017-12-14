@@ -76,7 +76,6 @@ WasmBlock((module) => ({
 
 index.html
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.20/webcomponents-loader.js"></script>
 <script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock.js"></script>
 <script src="webblock-alert.js"></script>
 <wasm-module src="shoutworld.wasm" entry="start"></wasm-module>
