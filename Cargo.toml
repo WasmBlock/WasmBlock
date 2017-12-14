@@ -3,7 +3,7 @@ name = "wasmblock"
 version = "0.0.1"
 authors = ["Richard <richard.anaya@gmail.com>"]
 include = [
-    "**/*.rs",
+    "src/**/*.rs",
     "Cargo.toml",
 ]
 
