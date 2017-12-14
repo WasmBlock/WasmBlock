@@ -7,4 +7,3 @@ authors = ["Richard <richard.anaya@gmail.com>"]
 crate-type = ["cdylib"]
 
 [dependencies]
-lazy_static = "1.0.0"

@@ -1,7 +1,5 @@
 //using special macros for global state, see below
-#[macro_use]
-extern crate lazy_static;
-use std::sync::Mutex;
+use std::cell::RefCell;
 use std::mem;
 use std::ffi::{CString, CStr};
 use std::os::raw::{c_char,c_void};
@@ -78,8 +76,8 @@ struct Game {
 
 //we can't have mutable statics so we need this mutex that holds it
 //using a macro from a crate lazy_static
-lazy_static! {
-    static ref GAME: Mutex<Game> = Mutex::new(
+thread_local! {
+    static GAME: RefCell<Game> = RefCell::new(
         Game {
             player_turn: 0
         }
@@ -145,17 +143,19 @@ pub fn start() -> () {
 
 #[no_mangle]
 pub fn box_clicked(id_ptr: *mut c_char) -> () {
-    let id = import_string(id_ptr);
-    let target = &format!("#{}",id);
-    let game = &mut GAME.lock().unwrap();
-    match game.player_turn {
-        0 => {
-            set_html(target,"X");
-            game.player_turn = 1;
+    GAME.with(|static_game| {
+        let id = import_string(id_ptr);
+        let target = &format!("#{}",id);
+        let game = &mut static_game.borrow_mut();
+        match game.player_turn {
+            0 => {
+                set_html(target,"X");
+                game.player_turn = 1;
+            }
+            _ => {
+                set_html(target,"O");
+                game.player_turn = 0;
+            }
         }
-        _ => {
-            set_html(target,"O");
-            game.player_turn = 0;
-        }
-    }
+    })
 }
