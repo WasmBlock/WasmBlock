@@ -169,18 +169,20 @@ class WasmModule extends HTMLElement {
      };
 
      WasmBlock.extensions.forEach(x=>{
-       imports.env = x(Module);
-     })
+       imports.env = Object.assign(imports.env,x(Module));
+     });
 
      // On instantiation we pass the imports object
-     fetchAndInstantiate("./helloworld.wasm", imports)
+     fetchAndInstantiate(src, imports)
        .then(mod => {
          Module.$copyCStr   = function(ptr){
            return copyCStr(Module,ptr);
          };
-         Module.memory      = mod.exports.memory;
-         Module.dealloc     = mod.exports.dealloc;
-         Module.dealloc_str = mod.exports.dealloc_str;
+         var keys = Object.keys(mod.exports);
+
+         keys.forEach(x=>{
+            Module[x]=mod.exports[x];
+         })
 
          mod.exports[entry]();
        });
