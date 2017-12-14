@@ -2,8 +2,9 @@
 #[macro_use]
 extern crate lazy_static;
 use std::sync::Mutex;
-use std::ffi::CString;
-use std::os::raw::{c_char};
+use std::mem;
+use std::ffi::{CString, CStr};
+use std::os::raw::{c_char,c_void};
 
 #[no_mangle]
 pub extern "C" fn alloc(size: usize) -> *mut c_void {
@@ -17,6 +18,12 @@ pub extern "C" fn alloc(size: usize) -> *mut c_void {
 pub extern "C" fn dealloc_str(ptr: *mut c_char) {
     unsafe {
         let _ = CString::from_raw(ptr);
+    }
+}
+
+fn import_string(data: *mut c_char) -> String{
+    unsafe {
+        CStr::from_ptr(data).to_string_lossy().into_owned()
     }
 }
 
@@ -110,6 +117,13 @@ pub fn start() -> () {
             margin: 0px;
             border: solid 1px #ccc;
             cursor: pointer;
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+             -khtml-user-select: none; /* Konqueror HTML */
+               -moz-user-select: none; /* Firefox */
+                -ms-user-select: none; /* Internet Explorer/Edge */
+                    user-select: none; /* Non-prefixed version, currently
+                                          supported by Chrome and Opera */
         }
 
         .box:hover {
@@ -124,21 +138,23 @@ pub fn start() -> () {
             set_html(target,".");
             set_attr(target,"class","box");
             set_attr(target,"class","box");
+            on_event(target,"click","box_clicked");
         }
     }
-    on_event(".box","click","box_clicked");
 }
 
 #[no_mangle]
-pub fn box_clicked() -> () {
+pub fn box_clicked(id_ptr: *mut c_char) -> () {
+    let id = import_string(id_ptr);
+    let target = &format!("#{}",id);
     let game = &mut GAME.lock().unwrap();
     match game.player_turn {
         0 => {
-            set_html("#box_00","X");
+            set_html(target,"X");
             game.player_turn = 1;
         }
         _ => {
-            set_html("#box_00","O");
+            set_html(target,"O");
             game.player_turn = 0;
         }
     }

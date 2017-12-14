@@ -22,8 +22,8 @@ WasmBlock((module) => ({
     let targetName = module.$copyCStr(targetPtr);
     let eventName = module.$copyCStr(eventPtr);
     let callbackName = module.$copyCStr(callbackPtr);
-    document.querySelector(targetName).addEventListener(eventName,function(){
-      module[callbackName]();
+    document.querySelector(targetName).addEventListener(eventName,function(e){
+      module[callbackName](module.$newString(e.target.id));
     });
   }
 }))

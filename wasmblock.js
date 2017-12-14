@@ -178,6 +178,9 @@ class WasmModule extends HTMLElement {
          Module.$copyCStr   = function(ptr){
            return copyCStr(Module,ptr);
          };
+         Module.$newString   = function(s){
+           return newString(Module,s);
+         };
          var keys = Object.keys(mod.exports);
 
          keys.forEach(x=>{
