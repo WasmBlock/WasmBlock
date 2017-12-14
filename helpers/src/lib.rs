@@ -7,11 +7,13 @@ use std::cell::RefCell;
 use std::os::raw::{c_char,c_void};
 use std::ffi::{CString};
 use wasmblock::{import_string};
-use wasmblock::console;
 use wasmblock::dom;
+use wasmblock::console;
 
+// needed for allocation and deallocation functions
 wasmblock_setup!();
 
+// global game state
 struct Game {
     player_turn: i32
 }
