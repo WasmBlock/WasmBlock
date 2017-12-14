@@ -165,3 +165,19 @@ extern {
 ```
 
 These functions take in a function name to call back. It's referring to your publically exposed Rust function names.
+
+## DOM
+```html
+<script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock-dom.js"></script>
+```
+
+```rust
+extern {
+    fn dom_create_element(targetPtr: *const c_char,elPtr: *const c_char, idPtr: *const c_char);
+    fn dom_set_attribute(targetPtr: *const c_char,attrPtr: *const c_char,valPtr: *const c_char);
+    fn dom_set_inner_html(targetPtr: *const c_char,htmlPtr: *const c_char);
+    fn dom_add_event_listener(targetPtr: *const c_char,eventPtr: *const c_char,callbackPtr: *const c_char);
+}
+```
+
+All these functions work off a valid querySelector target. Check out the [tic tac toe](https://github.com/WasmBlock/WasmBlock/tree/master/tictactoe/src/lib.rs) demo to see examples of how to use this API.

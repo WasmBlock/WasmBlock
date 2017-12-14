@@ -1,5 +1,17 @@
+//using special macros for global state, see below
+#[macro_use]
+extern crate lazy_static;
+use std::sync::Mutex;
 use std::ffi::CString;
 use std::os::raw::{c_char};
+
+#[no_mangle]
+pub extern "C" fn alloc(size: usize) -> *mut c_void {
+    let mut buf = Vec::with_capacity(size);
+    let ptr = buf.as_mut_ptr();
+    mem::forget(buf);
+    return ptr as *mut c_void;
+}
 
 #[no_mangle]
 pub extern "C" fn dealloc_str(ptr: *mut c_char) {
@@ -51,6 +63,20 @@ fn on_event(target:&str,event:&str,callback:&str){
     unsafe {
         dom_add_event_listener(export_string(target),export_string(event),export_string(callback));
     }
+}
+
+struct Game {
+    player_turn: i32
+}
+
+//we can't have mutable statics so we need this mutex that holds it
+//using a macro from a crate lazy_static
+lazy_static! {
+    static ref GAME: Mutex<Game> = Mutex::new(
+        Game {
+            player_turn: 0
+        }
+    );
 }
 
 #[no_mangle]
@@ -105,5 +131,15 @@ pub fn start() -> () {
 
 #[no_mangle]
 pub fn box_clicked() -> () {
-    set_html("#box_00","X");
+    let game = &mut GAME.lock().unwrap();
+    match game.player_turn {
+        0 => {
+            set_html("#box_00","X");
+            game.player_turn = 1;
+        }
+        _ => {
+            set_html("#box_00","O");
+            game.player_turn = 0;
+        }
+    }
 }
