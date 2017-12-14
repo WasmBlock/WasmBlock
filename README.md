@@ -43,13 +43,13 @@ pub extern "C" fn dealloc_str(ptr: *mut c_char) {
 
 // An api function exposed by wasmblock-console.js
 extern {
-    fn console_log(x: *const c_char);
+    fn wasmblock_setupconsole_log(x: *const c_char);
 }
 
 #[no_mangle]
 pub fn start() -> () {
     unsafe {
-        console_log(export_string("Hello World!"));
+        wasmblock_setupconsole_log(export_string("Hello World!"));
     }
 }
 ```
@@ -146,16 +146,16 @@ All these apis show something in the browser console.
 ```rust
 extern {
     // show various log levels
-    fn console_log(msg: *const c_char);
-    fn console_error(msg: *const c_char);
-    fn console_info(msg: *const c_char);
-    fn console_debug(msg: *const c_char);
+    fn wasmblock_console_log(msg: *const c_char);
+    fn wasmblock_console_error(msg: *const c_char);
+    fn wasmblock_console_info(msg: *const c_char);
+    fn wasmblock_console_debug(msg: *const c_char);
     // clears the console
-    fn console_clear();
+    fn wasmblock_console_clear();
     // useful for timing things, call console_time() then console_time_end()
     // and the elapsed time shows in console
-    fn console_time();
-    fn console_time_end();
+    fn wasmblock_console_time();
+    fn wasmblock_console_time_end();
 }
 ```
 
@@ -169,11 +169,11 @@ extern {
     // This function requests the browser to call a web assembly function you
     // have exposed by name on the next render frame. This is used often in
     // games so you don't draw more often than the browser can (60 fps).
-    fn timing_request_animation_frame(fnName: *const c_char);
+    fn wasmblock_timing_request_animation_frame(fnName: *const c_char);
 
     // This function requests the browser to call a web assembly function you
     // have exposed by name after  a certain amount of milliseconds
-    fn timing_set_timeout(fnName: *const c_char, milliseconds:i32);
+    fn wasmblock_timing_set_timeout(fnName: *const c_char, milliseconds:i32);
 }
 ```
 
@@ -187,14 +187,14 @@ These functions take in a function name to call back. It's referring to your pub
 ```rust
 extern {
     // creates an element at a certain dom target with a given id
-    fn dom_create_element(targetPtr: *const c_char,elPtr: *const c_char, idPtr: *const c_char);
+    fn wasmblock_dom_create_element(targetPtr: *const c_char,elPtr: *const c_char, idPtr: *const c_char);
     // set an attribute of a dom target
-    fn dom_set_attribute(targetPtr: *const c_char,attrPtr: *const c_char,valPtr: *const c_char);
+    fn wasmblock_dom_set_attribute(targetPtr: *const c_char,attrPtr: *const c_char,valPtr: *const c_char);
     // set the inner html of a dom target
-    fn dom_set_inner_html(targetPtr: *const c_char,htmlPtr: *const c_char);
+    fn wasmblock_dom_set_inner_html(targetPtr: *const c_char,htmlPtr: *const c_char);
     // add a listener to a dom target
-    fn dom_add_event_listener(targetPtr: *const c_char,eventPtr: *const c_char,callbackPtr: *const c_char);
+    fn wasmblock_dom_add_event_listener(targetPtr: *const c_char,eventPtr: *const c_char,callbackPtr: *const c_char);
 }
 ```
 
-All these functions work off a valid [css selector](https://www.w3schools.com/cssref/css_selectors.asp) as the dom target. Check out the [tic tac toe](https://github.com/WasmBlock/WasmBlock/tree/master/tictactoe/src/lib.rs) demo to see examples of how to use this API. And also look how 
+All these functions work off a valid [css selector](https://www.w3schools.com/cssref/css_selectors.asp) as the dom target. Check out the [tic tac toe](https://github.com/WasmBlock/WasmBlock/tree/master/tictactoe/src/lib.rs) demo to see examples of how to use this API. And also look how
