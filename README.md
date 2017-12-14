@@ -130,3 +130,38 @@ rustc +nightly --target wasm32-unknown-unknown -O --crate-type=cdylib shoutworld
 <script src="future_work/wasmblock-dom.js"></script>
 <wasm-module src="helloworld.wasm" entry="start"></wasm-module>
 ```
+
+# APIs
+
+Here are current APIs for you to mix and match. Every extern is shown, but remember, your Rust only needs to contain externs it uses for brevity.
+
+## Console
+```html
+<script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock-console.js"></script>
+```
+
+```rust
+extern {
+    fn console_log(msg: *const c_char);
+    fn console_error(msg: *const c_char);
+    fn console_info(msg: *const c_char);
+    fn console_debug(msg: *const c_char);
+    fn console_clear();
+    fn console_time();
+    fn console_time_end();
+}
+```
+
+## Timing
+```html
+<script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock-timing.js"></script>
+```
+
+```rust
+extern {
+    fn request_animation_frame(fnName: *const c_char);
+    fn set_timeout(fnName: *const c_char, milliseconds:i32);
+}
+```
+
+These functions take in a function name to call back. It's referring to your publically exposed Rust function names.
