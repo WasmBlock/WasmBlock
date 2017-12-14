@@ -13,8 +13,8 @@
 
 index.html
 ```html
-<script src="https://rawgit.com/WasmBlocks/WasmBlocks/master/wasmblock.js"></script>
-<script src="https://rawgit.com/WasmBlocks/WasmBlocks/master/wasmblock-console.js"></script>
+<script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock.js"></script>
+<script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock-console.js"></script>
 <wasm-module src="helloworld.wasm" entry="start" console></wasm-module>
 ```
 
@@ -77,7 +77,7 @@ WebBlock.extensions.alert = function(Module){
 ```
 
 ``html
-<script src="https://rawgit.com/WasmBlocks/WasmBlocks/master/wasmblock.js"></script>
+<script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock.js"></script>
 <script src="webblock-alert.js"></script>
 <wasm-module src="shoutworld.wasm" entry="start" alert></wasm-module>
 ```
