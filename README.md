@@ -109,15 +109,15 @@ pub extern "C" fn dealloc_str(ptr: *mut c_char) {
     }
 }
 
-// An api function exposed by wasmblock-console.js
+// An api function exposed by wasmblock-alert.js
 extern {
-    fn console_log(x: *const c_char);
+    fn alert(x: *const c_char);
 }
 
 #[no_mangle]
 pub fn start() -> () {
     unsafe {
-        console_log(export_string("Hello World!"));
+        alert(export_string("Hello World!"));
     }
 }
 ```
