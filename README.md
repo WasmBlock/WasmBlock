@@ -66,16 +66,12 @@ rustc +nightly --target wasm32-unknown-unknown -O --crate-type=cdylib helloworld
 
 shoutworld.js
 ```javascript
-// extension name "alert" here defines how you will expose it to a module below in html
-WebBlock.extensions.alert = function(Module){
-  return {
-    alert: function(strPtr) {
-      // Copying this string from web assemblies memory will deallocate it
-      let str = Module.$copyCStr(Module, strPtr);
-      window.alert(str)
-    }
+WasmBlock((Module) => ({
+  alert: function(strPtr) {
+    let result = Module.$copyCStr(strPtr);
+    window.alert(result);
   }
-}
+}))
 ```
 
 index.html

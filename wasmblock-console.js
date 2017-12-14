@@ -1,8 +1,6 @@
-WasmBlock.extensions.console = function(Module){
-  return {
-    console_log: function(outptr) {
-      let result = Module.$copyCStr(Module, outptr);
-      console.log(result);
-    }
+WasmBlock((Module) => ({
+  console_log: function(strPtr) {
+    let result = Module.$copyCStr(strPtr);
+    console.log(result);
   }
-}
+}))
