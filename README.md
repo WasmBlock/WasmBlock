@@ -63,7 +63,7 @@ rustc +nightly --target wasm32-unknown-unknown -O --crate-type=cdylib helloworld
 
 # Making a new library
 
-shoutworld.js
+wasmblock-shout.js
 ```javascript
 WasmBlock((module) => ({
   shout: function(strPtr) {
@@ -77,7 +77,7 @@ WasmBlock((module) => ({
 index.html
 ```html
 <script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock.js"></script>
-<script src="webblock-alert.js"></script>
+<script src="wasmblock-shout.js"></script>
 <wasm-module src="shoutworld.wasm" entry="start"></wasm-module>
 ```
 
