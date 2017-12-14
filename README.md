@@ -11,8 +11,8 @@
 
 index.html
 ```html
-<script src="https://rawgit.com/WasmBlocks/WasmBlocks/master/wasmblocks.js"></script>
-<script src="https://rawgit.com/WasmBlocks/WasmBlocks/master/wasmblocks-console.js"></script>
+<script src="https://rawgit.com/WasmBlocks/WasmBlocks/master/wasmblock.js"></script>
+<script src="https://rawgit.com/WasmBlocks/WasmBlocks/master/wasmblock-console.js"></script>
 <wasm-module src="helloworld.wasm" entry="start" console></wasm-module>
 ```
 
@@ -63,7 +63,7 @@ rustc +nightly --target wasm32-unknown-unknown -O --crate-type=cdylib helloworld
 
 ```javascript
 // extension name "alert" here defines how you will expose it to a module below in html
-WebBlocks.extensions.alert = function(Module){
+WebBlock.extensions.alert = function(Module){
   return {
     alert: function(strPtr) {
       // Copying this string from web assemblies memory will deallocate it
@@ -75,7 +75,7 @@ WebBlocks.extensions.alert = function(Module){
 ```
 
 ``html
-<script src="https://rawgit.com/WasmBlocks/WasmBlocks/master/wasmblocks.js"></script>
+<script src="https://rawgit.com/WasmBlocks/WasmBlocks/master/wasmblock.js"></script>
 <script src="webblock-alert.js"></script>
 <wasm-module src="shoutworld.wasm" entry="start" alert></wasm-module>
 ```

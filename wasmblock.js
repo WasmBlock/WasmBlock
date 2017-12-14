@@ -1,4 +1,4 @@
-var WebBlocks = {
+var WebBlock = {
   extensions:{}
 };
 
@@ -93,7 +93,7 @@ class WasmModule extends HTMLElement {
      for(var i = 0 ; i < this.attributes.length; i++){
        var attr = this.attributes[i];
        if(attr.name != "entry" && attr.name != "src" && attr.value === ""){
-         imports.env = Object.assign(imports.env,WebBlocks.extensions[attr.name](Module));
+         imports.env = Object.assign(imports.env,WebBlock.extensions[attr.name](Module));
        }
      }
 
