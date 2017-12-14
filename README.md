@@ -123,7 +123,7 @@ pub fn start() -> () {
 rustc +nightly --target wasm32-unknown-unknown -O --crate-type=cdylib shoutworld.rs -o shoutworld.wasm
 ```
 
-# Combining WasmBlocks to expose more to modules
+# Combining WasmBlocks to expose more to web assembly
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.20/webcomponents-loader.js"></script>
