@@ -28,7 +28,6 @@ pub fn start() -> () {
 #[no_mangle]
 pub fn run() -> () {
     unsafe {
-        //
         console_log(export_string("Running"));
         //call yourself in 1000 seconds
         set_timeout(export_string("run"),1000);
