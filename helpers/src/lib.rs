@@ -7,8 +7,7 @@ use std::cell::RefCell;
 use std::os::raw::{c_char,c_void};
 use std::ffi::{CString};
 use wasmblock::{import_string};
-use wasmblock::dom;
-use wasmblock::console;
+use wasmblock::{dom,console};
 
 // needed for allocation and deallocation functions
 wasmblock_setup!();
