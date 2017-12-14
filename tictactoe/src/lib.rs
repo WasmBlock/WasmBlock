@@ -74,7 +74,7 @@ struct Game {
     player_turn: i32
 }
 
-//we can't have mutable statics by default so we uze this to enable it
+//we can't have mutable statics by default so we use this to enable it
 thread_local! {
     static GAME: RefCell<Game> = RefCell::new(
         Game {

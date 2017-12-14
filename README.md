@@ -204,6 +204,7 @@ All these functions work off a valid [css selector](https://www.w3schools.com/cs
 
 Writing websites in Rust oriented manner in the most minimal way
 
+tictactoe.rs
 ```rust
 #[macro_use(wasmblock_setup)]
 extern crate wasmblock;
@@ -224,7 +225,7 @@ struct Game {
     player_turn: i32
 }
 
-//we can't have mutable statics by default so we uze this to enable it
+//we can't have mutable statics by default so we use this to enable it
 thread_local! {
     static GAME: RefCell<Game> = RefCell::new(
         Game {
