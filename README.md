@@ -77,7 +77,7 @@ WebBlock.extensions.alert = function(Module){
 }
 ```
 
-``html
+```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.20/webcomponents-loader.js"></script>
 <script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock.js"></script>
 <script src="webblock-alert.js"></script>
