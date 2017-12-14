@@ -88,46 +88,7 @@ thread_local! {
 pub fn start() -> () {
     log("Let's play a game.");
     el("body","style","game_styles");
-    set_html("#game_styles",r#"
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: arial;
-            font-size: 50px;
-        }
-
-        #board {
-            border: solid 1px #999;
-            width: 300px;
-            height: 300px;;
-            padding: 0px;
-            margin: 0px;
-        }
-
-        .box {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 98px;
-            height: 98px;
-            padding: 0px;
-            margin: 0px;
-            border: solid 1px #ccc;
-            cursor: pointer;
-            -webkit-touch-callout: none; /* iOS Safari */
-            -webkit-user-select: none; /* Safari */
-             -khtml-user-select: none; /* Konqueror HTML */
-               -moz-user-select: none; /* Firefox */
-                -ms-user-select: none; /* Internet Explorer/Edge */
-                    user-select: none; /* Non-prefixed version, currently
-                                          supported by Chrome and Opera */
-        }
-
-        .box:hover {
-            background: #ccc;
-        }
-    "#);
+    set_html("#game_styles",include_str!("tictactoe.css"));
     el("body","div","board");
     for x in 0..3 {
         for y in 0..3 {
