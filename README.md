@@ -126,9 +126,9 @@ rustc +nightly --target wasm32-unknown-unknown -O --crate-type=cdylib shoutworld
 ```html
 <script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock.js"></script>
 <script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock-console.js"></script>
+<script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock-dom.js"></script>
 <script src="future_work/wasmblock-webgl.js"></script>
-<script src="future_work/wasmblock-dom.js"></script>
-<wasm-module src="helloworld.wasm" entry="start"></wasm-module>
+<wasm-module src="my_app.wasm" entry="start"></wasm-module>
 ```
 
 # APIs
@@ -136,17 +136,24 @@ rustc +nightly --target wasm32-unknown-unknown -O --crate-type=cdylib shoutworld
 Here are current APIs for you to mix and match. Every extern is shown, but remember, your Rust only needs to contain externs it uses for brevity.
 
 ## Console
+
+All these apis show something in the browser console.
+
 ```html
 <script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock-console.js"></script>
 ```
 
 ```rust
 extern {
+    // show various log levels
     fn console_log(msg: *const c_char);
     fn console_error(msg: *const c_char);
     fn console_info(msg: *const c_char);
     fn console_debug(msg: *const c_char);
+    // clears the console
     fn console_clear();
+    // useful for timing things, call console_time() then console_time_end()
+    // and the elapsed time shows in console
     fn console_time();
     fn console_time_end();
 }
@@ -159,7 +166,13 @@ extern {
 
 ```rust
 extern {
+    // This function requests the browser to call a web assembly function you
+    // have exposed by name on the next render frame. This is used often in
+    // games so you don't draw more often than the browser can (60 fps).
     fn timing_request_animation_frame(fnName: *const c_char);
+
+    // This function requests the browser to call a web assembly function you
+    // have exposed by name after  a certain amount of milliseconds
     fn timing_set_timeout(fnName: *const c_char, milliseconds:i32);
 }
 ```
@@ -173,11 +186,15 @@ These functions take in a function name to call back. It's referring to your pub
 
 ```rust
 extern {
+    // creates an element at a certain dom target with a given id
     fn dom_create_element(targetPtr: *const c_char,elPtr: *const c_char, idPtr: *const c_char);
+    // set an attribute of a dom target
     fn dom_set_attribute(targetPtr: *const c_char,attrPtr: *const c_char,valPtr: *const c_char);
+    // set the inner html of a dom target
     fn dom_set_inner_html(targetPtr: *const c_char,htmlPtr: *const c_char);
+    // add a listener to a dom target
     fn dom_add_event_listener(targetPtr: *const c_char,eventPtr: *const c_char,callbackPtr: *const c_char);
 }
 ```
 
-All these functions work off a valid querySelector target. Check out the [tic tac toe](https://github.com/WasmBlock/WasmBlock/tree/master/tictactoe/src/lib.rs) demo to see examples of how to use this API.
+All these functions work off a valid [css selector](https://www.w3schools.com/cssref/css_selectors.asp) as the dom target. Check out the [tic tac toe](https://github.com/WasmBlock/WasmBlock/tree/master/tictactoe/src/lib.rs) demo to see examples of how to use this API. And also look how 
