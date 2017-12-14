@@ -1,3 +1,8 @@
+var WebBlocks = {
+  extensions:{}
+};
+
+(function(){
 
 function fetchAndInstantiate(url, importObject) {
   return fetch(url).then(response =>
@@ -58,10 +63,6 @@ function newString(module, str) {
   return ptr
 }
 
-var WebBlocks = {
-  extensions:{}
-}
-
 "use strict";
 class WasmModule extends HTMLElement {
    constructor() {
@@ -99,6 +100,7 @@ class WasmModule extends HTMLElement {
      // On instantiation we pass the imports object
      fetchAndInstantiate("./helloworld.wasm", imports)
        .then(mod => {
+         Module.$copyCStr   = copyCStr;
          Module.memory      = mod.exports.memory;
          Module.dealloc     = mod.exports.dealloc;
          Module.dealloc_str = mod.exports.dealloc_str;
@@ -110,3 +112,6 @@ class WasmModule extends HTMLElement {
 }
 
 customElements.define("wasm-module", WasmModule);
+
+
+})()
