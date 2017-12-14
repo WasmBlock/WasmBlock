@@ -74,8 +74,7 @@ struct Game {
     player_turn: i32
 }
 
-//we can't have mutable statics so we need this mutex that holds it
-//using a macro from a crate lazy_static
+//we can't have mutable statics by default so we uze this to enable it
 thread_local! {
     static GAME: RefCell<Game> = RefCell::new(
         Game {
