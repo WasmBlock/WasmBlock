@@ -6,5 +6,6 @@ include = [
     "src/**/*.rs",
     "Cargo.toml",
 ]
+license = "MIT"
 
 [dependencies]
