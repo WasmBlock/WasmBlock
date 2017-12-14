@@ -66,9 +66,9 @@ rustc +nightly --target wasm32-unknown-unknown -O --crate-type=cdylib helloworld
 
 shoutworld.js
 ```javascript
-WasmBlock((Module) => ({
+WasmBlock((module) => ({
   alert: function(strPtr) {
-    let result = Module.$copyCStr(strPtr);
+    let result = module.$copyCStr(strPtr);
     window.alert(result);
   }
 }))

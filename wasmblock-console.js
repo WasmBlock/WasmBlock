@@ -1,6 +1,6 @@
-WasmBlock((Module) => ({
+WasmBlock((module) => ({
   console_log: function(strPtr) {
-    let result = Module.$copyCStr(strPtr);
+    let result = module.$copyCStr(strPtr);
     console.log(result);
   }
 }))
