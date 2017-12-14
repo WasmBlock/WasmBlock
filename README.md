@@ -86,9 +86,10 @@ shoutworld.rs
 use std::ffi::CString;
 use std::os::raw::{c_char};
 
-// When we send strings to javascript we will have to create strings and have
+// When we send strings to javascript we will create string buffers and have
 // Rust forget about them so they remain in Web Assembly's memory for
-// javascript to consume
+// javascript to consume. Once javascript has made a string from our
+// web assembly's memory, it will deallocate this buffer immediately.
 fn export_string<T:Into<std::vec::Vec<u8>>>(s:T) -> *const c_char{
     let s = CString::new(s).unwrap();
     let p = s.as_ptr();
