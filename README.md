@@ -1,7 +1,7 @@
 # What's the purpose of this?
 > Expose web api libraries as plugins in a way that is easy for Rust developers
 
-# Why is Web Assembly is hard for Rust developers
+# Why might Web Assembly be hard for Rust developers
 * For many Javascript may not be their primary language
 * Talking with Javascript from Rust can be unintuitive. Rust might not deallocate what it exports, and if so Javascript must deallocate it when it is done with what it has received.
 * Making websites that use only what you need is important
@@ -64,6 +64,7 @@ rustc +nightly --target wasm32-unknown-unknown -O --crate-type=cdylib helloworld
 
 # Making a new library
 
+shoutworld.js
 ```javascript
 // extension name "alert" here defines how you will expose it to a module below in html
 WebBlock.extensions.alert = function(Module){
@@ -77,7 +78,8 @@ WebBlock.extensions.alert = function(Module){
 }
 ```
 
-``html
+index.html
+```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.20/webcomponents-loader.js"></script>
 <script src="https://rawgit.com/WasmBlock/WasmBlock/master/wasmblock.js"></script>
 <script src="webblock-alert.js"></script>
@@ -107,15 +109,15 @@ pub extern "C" fn dealloc_str(ptr: *mut c_char) {
     }
 }
 
-// An api function exposed by wasmblock-console.js
+// An api function exposed by wasmblock-alert.js
 extern {
-    fn console_log(x: *const c_char);
+    fn alert(x: *const c_char);
 }
 
 #[no_mangle]
 pub fn start() -> () {
     unsafe {
-        console_log(export_string("Hello World!"));
+        alert(export_string("Hello World!!!"));
     }
 }
 ```
