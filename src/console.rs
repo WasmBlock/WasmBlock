@@ -10,11 +10,53 @@ pub fn export_string<T:Into<std::vec::Vec<u8>>>(s:T) -> *const c_char{
 }
 
 extern {
-    fn wasmblock_console_log(x: *const c_char);
+    fn wasmblock_console_log(msg: *const c_char);
+    fn wasmblock_console_error(msg: *const c_char);
+    fn wasmblock_console_info(msg: *const c_char);
+    fn wasmblock_console_debug(msg: *const c_char);
+    fn wasmblock_console_clear();
+    fn wasmblock_console_time();
+    fn wasmblock_console_time_end();
 }
 
 pub fn log(msg:&str){
     unsafe {
         wasmblock_console_log(export_string(msg));
+    }
+}
+
+pub fn error(msg:&str){
+    unsafe {
+        wasmblock_console_error(export_string(msg));
+    }
+}
+
+pub fn info(msg:&str){
+    unsafe {
+        wasmblock_console_info(export_string(msg));
+    }
+}
+
+pub fn debug(msg:&str){
+    unsafe {
+        wasmblock_console_debug(export_string(msg));
+    }
+}
+
+pub fn clear(){
+    unsafe {
+        wasmblock_console_clear();
+    }
+}
+
+pub fn time(){
+    unsafe {
+        wasmblock_console_time();
+    }
+}
+
+pub fn time_end(){
+    unsafe {
+        wasmblock_console_time_end();
     }
 }
