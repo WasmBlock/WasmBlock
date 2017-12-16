@@ -33,7 +33,6 @@ pub fn start() {
     dom::create_element("body","canvas","screen");
     dom::set_attribute("#screen","width","600");
     dom::set_attribute("#screen","height","400");
-
     run();
 }
 

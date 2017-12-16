@@ -17,7 +17,7 @@ macro_rules! wasmblock_setup {
         }
 
         #[no_mangle]
-        pub fn dealloc(ptr: *mut c_void, cap: usize) {
+        pub fn dealloc(ptr: *mut std::os::raw::c_void, cap: usize) {
             unsafe  {
                 let _buf = Vec::from_raw_parts(ptr, 0, cap);
             }
