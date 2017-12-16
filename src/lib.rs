@@ -3,6 +3,7 @@ use std::os::raw::{c_char};
 pub mod console;
 pub mod dom;
 pub mod timing;
+pub mod canvas;
 
 #[macro_export]
 macro_rules! wasmblock_setup {
