@@ -1,6 +1,6 @@
 [package]
 name = "wasmblock"
-version = "0.0.10"
+version = "0.0.11"
 authors = ["Richard <richard.anaya@gmail.com>"]
 include = [
     "src/**/*.rs",
