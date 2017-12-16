@@ -6,9 +6,60 @@ use std::mem;
 use std::os::raw::{c_char,c_void};
 use std::ffi::{CString};
 use wasmblock::{dom,canvas};
+use std::ops::{Add, Mul};
+
 
 // needed for allocation and deallocation functions
 wasmblock_setup!();
+
+#[derive(Copy, Clone)]
+struct Complex {
+    re: f64,
+    im: f64
+}
+
+impl Add<Complex> for Complex {
+    type Output = Complex;
+
+    #[inline]
+    fn add(self, other: Complex) -> Complex {
+        Complex::new(self.re + other.re, self.im + other.im)
+    }
+}
+
+impl Mul<Complex> for Complex {
+    type Output = Complex;
+
+    #[inline]
+    fn mul(self, other: Complex) -> Complex {
+        let re = self.re.clone() * other.re.clone() - self.im.clone() * other.im.clone();
+        let im = self.re * other.im + self.im * other.re;
+        Complex::new(re, im)
+    }
+}
+
+impl Complex {
+    #[inline]
+    pub fn new(re: f64, im: f64) -> Complex {
+        Complex { re: re, im: im }
+    }
+
+    #[inline]
+    pub fn norm_sqr(&self) -> f64 {
+        self.re.clone() * self.re.clone() + self.im.clone() * self.im.clone()
+    }
+}
+
+fn escape_time(c: Complex, limit: u32) -> Option<u32> {
+        let mut z = Complex { re: 0.0, im: 0.0};
+        for i in 0..limit {
+            z = z*z + c;
+            if z.norm_sqr() > 4.0 {
+                return Some(i);
+            }
+        }
+        None
+}
 
 #[no_mangle]
 pub fn start() -> () {

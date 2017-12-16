@@ -14,12 +14,14 @@ extern {
     fn wasmblock_timing_set_timeout(fn_name: *const c_char, milliseconds:i32);
 }
 
+#[inline]
 pub fn request_animation_frame(fn_name:&str){
     unsafe {
         wasmblock_timing_request_animation_frame(export_string(fn_name));
     }
 }
 
+#[inline]
 pub fn set_timeout(fn_name:&str,milliseconds:i32){
     unsafe {
         wasmblock_timing_set_timeout(export_string(fn_name),milliseconds);

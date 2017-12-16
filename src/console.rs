@@ -19,42 +19,49 @@ extern {
     fn wasmblock_console_time_end();
 }
 
+#[inline]
 pub fn log(msg:&str){
     unsafe {
         wasmblock_console_log(export_string(msg));
     }
 }
 
+#[inline]
 pub fn error(msg:&str){
     unsafe {
         wasmblock_console_error(export_string(msg));
     }
 }
 
+#[inline]
 pub fn info(msg:&str){
     unsafe {
         wasmblock_console_info(export_string(msg));
     }
 }
 
+#[inline]
 pub fn debug(msg:&str){
     unsafe {
         wasmblock_console_debug(export_string(msg));
     }
 }
 
+#[inline]
 pub fn clear(){
     unsafe {
         wasmblock_console_clear();
     }
 }
 
+#[inline]
 pub fn time(){
     unsafe {
         wasmblock_console_time();
     }
 }
 
+#[inline]
 pub fn time_end(){
     unsafe {
         wasmblock_console_time_end();

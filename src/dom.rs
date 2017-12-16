@@ -16,24 +16,28 @@ extern {
     fn wasmblock_dom_add_event_listener(targetPtr: *const c_char,eventPtr: *const c_char,callbackPtr: *const c_char);
 }
 
+#[inline]
 pub fn create_element(target:&str,dom_type:&str,id:&str){
     unsafe {
         wasmblock_dom_create_element(export_string(target),export_string(dom_type), export_string(id));
     }
 }
 
+#[inline]
 pub fn set_inner_html(target:&str,html:&str){
     unsafe {
         wasmblock_dom_set_inner_html(export_string(target),export_string(html));
     }
 }
 
+#[inline]
 pub fn set_attribute(target:&str,attr:&str,val:&str){
     unsafe {
         wasmblock_dom_set_attribute(export_string(target),export_string(attr),export_string(val));
     }
 }
 
+#[inline]
 pub fn add_event_listener(target:&str,event:&str,callback:&str){
     unsafe {
         wasmblock_dom_add_event_listener(export_string(target),export_string(event),export_string(callback));
