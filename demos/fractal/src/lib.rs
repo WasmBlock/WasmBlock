@@ -5,7 +5,7 @@ extern crate wasmblock;
 use std::mem;
 use std::os::raw::{c_char,c_void};
 use std::ffi::{CString};
-use wasmblock::{dom,canvas};
+use wasmblock::{dom,canvas,console};
 use std::ops::{Add, Mul};
 
 
@@ -71,6 +71,7 @@ fn pixel_to_point(bounds:(usize,usize),pixel:(usize,usize),upper_left:Complex,lo
 
 #[no_mangle]
 pub fn start() -> () {
+    console::time();
     dom::create_element("body","style","game_styles");
     dom::set_inner_html("#game_styles",include_str!("fractal.css"));
     dom::create_element("body","canvas","screen");
@@ -91,4 +92,5 @@ pub fn start() -> () {
             canvas::fill_rect(ctx,column as f32,row as f32,1.0,1.0);
         }
     }
+    console::time_end();
 }
