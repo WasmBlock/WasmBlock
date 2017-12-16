@@ -1,9 +1,5 @@
 #[macro_use(wasmblock_setup)]
 extern crate wasmblock;
-
-use std::mem;
-use std::os::raw::{c_char,c_void};
-use std::ffi::{CString};
 use wasmblock::{dom,canvas,console,timing};
 
 // needed for allocation and deallocation functions
@@ -26,7 +22,7 @@ fn render() {
             pixels[(bounds.0*row+column)*pixel_size+3] = 0;
         }
     };
-    put_image_data(ctx,pixels,0,0,bounds.0 as i32,bounds.1 as i32);
+    canvas::put_image_data(ctx,pixels,0,0,bounds.0 as i32,bounds.1 as i32);
 }
 
 #[no_mangle]

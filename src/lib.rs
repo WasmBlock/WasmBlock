@@ -9,17 +9,17 @@ pub mod canvas;
 macro_rules! wasmblock_setup {
     () => {
         #[no_mangle]
-        pub extern fn alloc(size: usize) -> *mut c_void {
+        pub extern fn alloc(size: usize) -> *mut std::os::raw::c_void {
             let mut buf = Vec::with_capacity(size);
             let ptr = buf.as_mut_ptr();
-            mem::forget(buf);
-            return ptr as *mut c_void;
+            std::mem::forget(buf);
+            return ptr as *mut std::os::raw::c_void;
         }
 
         #[no_mangle]
-        pub extern fn dealloc_str(ptr: *mut c_char) {
+        pub extern fn dealloc_str(ptr: *mut std::os::raw::c_char) {
             unsafe {
-                let _ = CString::from_raw(ptr);
+                let _ = std::ffi::CString::from_raw(ptr);
             }
         }
     };
