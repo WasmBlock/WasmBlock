@@ -89,8 +89,11 @@ pub fn start() -> () {
     for column in 0..bounds.0 {
         for row in 0..bounds.1 {
             let point = pixel_to_point(bounds,(column,row),upper_left,lower_right);
-            let v = match escape_time(point, 255) {
+            let escape_limit = 255;
+            let v = match escape_time(point, escape_limit) {
+                //if it didn't escape to invite within our limit make black
                 None => 0,
+                //if it went to infinity fast, lets make it whiter
                 Some(count) => (255 - count) as u8
             };
             canvas::set_fill_style_color(ctx,v,v,v,1.0);
