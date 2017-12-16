@@ -61,6 +61,14 @@ function getStr(module, ptr, len) {
   return buffer_as_utf8;
 }
 
+function getU8Array(module, ptr, len) {
+  let memory = new Uint8Array(module.memory.buffer);
+  var data = memory.subarray(ptr,ptr+len-1);
+  module.dealloc(ptr,len);
+  debugger;
+  return data;
+}
+
 function newString(module, str) {
   const utf8Encoder = new TextEncoder("UTF-8");
   let string_buffer = utf8Encoder.encode(str)

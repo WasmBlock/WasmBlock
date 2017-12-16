@@ -17,5 +17,8 @@ WasmBlock((module) => {
     },
     wasmblock_canvas_fill_rect: function(ctx,x,y,width,height) {
       contextStorage[ctx].fillRect(x,y,width,height);
-    }
+    },
+    wasmblock_canvas_put_image_data: function(ctx,x,y,width,height) {
+      //contextStorage[ctx].fillRect(x,y,width,height);
+    },
 })})
