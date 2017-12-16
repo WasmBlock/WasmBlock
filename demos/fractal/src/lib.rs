@@ -73,7 +73,7 @@ fn pixel_to_point(bounds:(usize,usize),pixel:(usize,usize),upper_left:Complex,lo
 }
 
 #[no_mangle]
-pub fn start() -> () {
+pub fn start() {
     console::time();
     dom::create_element("body","style","game_styles");
     dom::set_inner_html("#game_styles",include_str!("fractal.css"));

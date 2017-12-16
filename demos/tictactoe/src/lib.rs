@@ -84,7 +84,7 @@ thread_local! {
 }
 
 #[no_mangle]
-pub fn start() -> () {
+pub fn start() {
     log("Let's play a game.");
     el("body","style","game_styles");
     set_html("#game_styles",include_str!("tictactoe.css"));

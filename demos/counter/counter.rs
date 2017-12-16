@@ -21,7 +21,7 @@ extern {
 }
 
 #[no_mangle]
-pub fn start() -> () {
+pub fn start() {
     run();
 }
 

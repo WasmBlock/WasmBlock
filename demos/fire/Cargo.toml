@@ -1,0 +1,10 @@
+[package]
+name = "fire"
+version = "0.1.0"
+authors = ["Richard <richard.anaya@gmail.com>"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+"wasmblock" = "0.0"

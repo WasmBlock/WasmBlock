@@ -1,0 +1,12 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: arial;
+    color: black;
+}
+
+#screen {
+  margin: 10px;
+}

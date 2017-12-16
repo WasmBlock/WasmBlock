@@ -20,7 +20,7 @@ extern {
 }
 
 #[no_mangle]
-pub fn start() -> () {
+pub fn start() {
     unsafe {
         wasmblock_console_log(export_string("Hello World!"));
     }

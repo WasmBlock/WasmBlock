@@ -47,7 +47,7 @@ extern {
 }
 
 #[no_mangle]
-pub fn start() -> () {
+pub fn start() {
     unsafe {
         wasmblock_setupconsole_log(export_string("Hello World!"));
     }
@@ -111,7 +111,7 @@ extern {
 }
 
 #[no_mangle]
-pub fn start() -> () {
+pub fn start() {
     unsafe {
         shout(export_string("Hello World!!!"));
     }
@@ -235,7 +235,7 @@ thread_local! {
 }
 
 #[no_mangle]
-pub fn start() -> () {
+pub fn start() {
     console::log("Let's play a game.");
     dom::create_element("body","style","game_styles");
     dom::set_inner_html("#game_styles",include_str!("tictactoe.css"));
