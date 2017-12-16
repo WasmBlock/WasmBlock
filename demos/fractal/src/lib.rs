@@ -61,6 +61,14 @@ fn escape_time(c: Complex, limit: u32) -> Option<u32> {
         None
 }
 
+fn pixel_to_point(bounds:(usize,usize),pixel:(usize,usize),upper_left:Complex,lower_right:Complex) -> Complex {
+    let (width,height) = (lower_right.re - upper_left.re, lower_right.im - upper_left.im);
+    Complex {
+        re: upper_left.re + pixel.0 as f64 * width / bounds.0 as f64,
+        im: upper_left.im + pixel.1 as f64 * height / bounds.1 as f64,
+    }
+}
+
 #[no_mangle]
 pub fn start() -> () {
     dom::create_element("body","style","game_styles");
@@ -69,14 +77,18 @@ pub fn start() -> () {
     dom::set_attribute("#screen","width","600");
     dom::set_attribute("#screen","height","400");
     let ctx = canvas::get_context("#screen");
-    for x in 0..600 {
-        for y in 0..400 {
-            let r = ((x as f32)/600.0 * 255.0) as u8;
-            let g = ((y as f32)/600.0 * 255.0) as u8;
-            let b = 0;
-            let a = 1.0;
-            canvas::set_fill_style_color(ctx,r,g,b,a);
-            canvas::fill_rect(ctx,x as f32,y as f32,1.0,1.0);
+    let upper_left = Complex{re:-1.2,im:0.35};
+    let lower_right = Complex{re:-1.0,im:0.2};
+    let bounds = (600,400);
+    for column in 0..bounds.0 {
+        for row in 0..bounds.1 {
+            let point = pixel_to_point(bounds,(column,row),upper_left,lower_right);
+            let v = match escape_time(point, 255) {
+                None => 0,
+                Some(count) => (255 - count) as u8
+            };
+            canvas::set_fill_style_color(ctx,v,v,v,1.0);
+            canvas::fill_rect(ctx,column as f32,row as f32,1.0,1.0);
         }
     }
 }
