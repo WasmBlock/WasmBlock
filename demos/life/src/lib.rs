@@ -15,14 +15,13 @@ struct AppState {
 
 const  PIXEL_SIZE: usize = 4;
 
-//we can't have mutable statics by default so we use this to enable it
 thread_local! {
     static APP_STATE: RefCell<AppState> = RefCell::new(
         AppState {
             ctx: 0,
-            pixels: vec![0 as u8],
-            width: 1,
-            height: 1
+            pixels: vec![],
+            width: 0,
+            height: 0
         }
     );
 }
