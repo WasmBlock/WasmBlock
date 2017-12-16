@@ -1,9 +1,5 @@
 #[macro_use(wasmblock_setup)]
 extern crate wasmblock;
-
-use std::mem;
-use std::os::raw::{c_char,c_void};
-use std::ffi::{CString};
 use wasmblock::{dom,canvas,console};
 use std::ops::{Add, Mul};
 

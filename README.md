@@ -210,10 +210,8 @@ tictactoe.rs
 extern crate wasmblock;
 
 //using special macros for global state, see below
-use std::mem;
 use std::cell::RefCell;
-use std::os::raw::{c_char,c_void};
-use std::ffi::{CString};
+use std::os::raw::{c_char};
 use wasmblock::{import_string};
 use wasmblock::{dom,console};
 
