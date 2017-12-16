@@ -61,11 +61,10 @@ function getStr(module, ptr, len) {
   return buffer_as_utf8;
 }
 
-function getU8Array(module, ptr, len) {
+function copyU8Array(module, ptr, len) {
   let memory = new Uint8Array(module.memory.buffer);
-  var data = memory.subarray(ptr,ptr+len-1);
+  var data = memory.subarray(ptr,ptr+len);
   module.dealloc(ptr,len);
-  debugger;
   return data;
 }
 
@@ -121,6 +120,9 @@ class WasmModule extends HTMLElement {
        .then(mod => {
          Module.$copyCStr   = function(ptr){
            return copyCStr(Module,ptr);
+         };
+         Module.$copyU8Array = function(ptr,len){
+           return copyU8Array(Module,ptr,len);
          };
          Module.$newString   = function(s){
            return newString(Module,s);

@@ -19,10 +19,10 @@ fn render() {
             pixels[(bounds.0*row+column)*pixel_size]   = (x/width*255.0) as u8;
             pixels[(bounds.0*row+column)*pixel_size+1] = (y/height*255.0) as u8;
             pixels[(bounds.0*row+column)*pixel_size+2] = 0;
-            pixels[(bounds.0*row+column)*pixel_size+3] = 0;
+            pixels[(bounds.0*row+column)*pixel_size+3] = 255;
         }
     };
-    canvas::put_image_data(ctx,pixels,0,0,bounds.0 as i32,bounds.1 as i32);
+    put_image_data(ctx,pixels,0,0,bounds.0 as i32,bounds.1 as i32);
 }
 
 #[no_mangle]

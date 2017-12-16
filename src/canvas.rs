@@ -49,8 +49,8 @@ pub fn fill_rect(ctx: u32, x:f32, y:f32, width:f32, height:f32){
 pub fn put_image_data(ctx: u32, pixel: Vec<u8>, x:i32,y:i32,width:i32,height:i32) {
     unsafe {
         let pix = pixel.clone();
-        let l = pixel.len();
-        let p = pixel.as_ptr();
+        let l = pix.len();
+        let p = pix.as_ptr();
         std::mem::forget(pix);
         wasmblock_canvas_put_image_data(ctx, p as *const u8, l as u32, x,y,width,height);
     }

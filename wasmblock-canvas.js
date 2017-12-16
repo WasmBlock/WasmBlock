@@ -18,7 +18,10 @@ WasmBlock((module) => {
     wasmblock_canvas_fill_rect: function(ctx,x,y,width,height) {
       contextStorage[ctx].fillRect(x,y,width,height);
     },
-    wasmblock_canvas_put_image_data: function(ctx,x,y,width,height) {
-      //contextStorage[ctx].fillRect(x,y,width,height);
+    wasmblock_canvas_put_image_data: function(ctx,pixelPtr, pixelLength, x,y,width,height) {
+      let pixels = module.$copyU8Array(pixelPtr,pixelLength);
+      var imageData = contextStorage[ctx].getImageData(x,y, width, height);
+      imageData.data.set(pixels);
+      contextStorage[ctx].putImageData(imageData, 0, 0);
     },
 })})
