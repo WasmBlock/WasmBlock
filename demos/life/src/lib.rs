@@ -103,7 +103,6 @@ fn update_board(app_state:&mut AppState){
 
 
 fn randomize_board(s: f32,board: &mut Vec<bool>){
-    console::log(&format!("{}",s));
     let seed: &[_] = &[(std::i32::MAX as f32 * s) as usize, 0, 0, 0];
     let mut rng: StdRng = SeedableRng::from_seed(seed);
     for i in 0..board.len() {
@@ -113,7 +112,6 @@ fn randomize_board(s: f32,board: &mut Vec<bool>){
 
 #[no_mangle]
 pub fn start() {
-    console::time();
     dom::create_element("body","style","game_styles");
     dom::set_inner_html("#game_styles",include_str!("life.css"));
     dom::create_element("body","canvas","screen");
