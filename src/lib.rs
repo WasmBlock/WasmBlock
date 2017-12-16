@@ -4,6 +4,7 @@ pub mod console;
 pub mod dom;
 pub mod timing;
 pub mod canvas;
+pub mod random;
 
 #[macro_export]
 macro_rules! wasmblock_setup {

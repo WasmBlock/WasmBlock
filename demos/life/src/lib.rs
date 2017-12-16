@@ -1,5 +1,6 @@
 #[macro_use(wasmblock_setup)]
 extern crate wasmblock;
+extern crate rand;
 use std::cell::RefCell;
 use wasmblock::{dom,canvas,console,timing};
 
@@ -10,7 +11,9 @@ struct AppState {
     ctx: u32,
     width: usize,
     height: usize,
-    pixels: Vec<u8>
+    pixels: Vec<u8>,
+    life: Vec<bool>,
+    next_life: Vec<bool>
 }
 
 const  PIXEL_SIZE: usize = 4;
@@ -19,6 +22,8 @@ thread_local! {
     static APP_STATE: RefCell<AppState> = RefCell::new(
         AppState {
             ctx: 0,
+            life: vec![],
+            next_life: vec![],
             pixels: vec![],
             width: 0,
             height: 0
@@ -27,20 +32,30 @@ thread_local! {
 }
 
 fn render(app_state:&mut AppState) {
-    let width : f32 = app_state.width as f32;
-    let height : f32 = app_state.height as f32;
-
     for column in 0..app_state.width {
         for row in 0..app_state.height {
-            let x = column as f32;
-            let y = row as f32;
-            app_state.pixels[(app_state.width*row+column)*PIXEL_SIZE]   = (x/width*255.0) as u8;
-            app_state.pixels[(app_state.width*row+column)*PIXEL_SIZE+1] = (y/height*255.0) as u8;
-            app_state.pixels[(app_state.width*row+column)*PIXEL_SIZE+2] = 0;
+            let v = if app_state.life[app_state.width*row+column] {
+                255
+            } else {
+                0
+            };
+            app_state.pixels[(app_state.width*row+column)*PIXEL_SIZE]   = v;
+            app_state.pixels[(app_state.width*row+column)*PIXEL_SIZE+1] = v;
+            app_state.pixels[(app_state.width*row+column)*PIXEL_SIZE+2] = v;
             app_state.pixels[(app_state.width*row+column)*PIXEL_SIZE+3] = 255;
         }
     };
     canvas::put_image_data(app_state.ctx,&app_state.pixels,0,0,app_state.width as i32,app_state.height as i32);
+}
+
+fn randomize_board(board: &mut Vec<bool>){
+    for i in 0..board.len() {
+        board[i] = if i%2 == 0 {
+            true
+        } else {
+            false
+        };
+    }
 }
 
 #[no_mangle]
@@ -56,6 +71,9 @@ pub fn start() {
         let app_state = &mut app_state_cell.borrow_mut();
         app_state.width= dimensions.0;
         app_state.height= dimensions.1;
+        app_state.life = vec![false;dimensions.0*dimensions.1];
+        randomize_board(&mut app_state.life);
+        app_state.next_life = vec![false;dimensions.0*dimensions.1];
         app_state.pixels = vec![0 as u8;dimensions.0*dimensions.1*PIXEL_SIZE];
         //store a reference to canvas once so we can reuse
         app_state.ctx = canvas::get_context("#screen");

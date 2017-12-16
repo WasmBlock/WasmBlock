@@ -8,3 +8,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 "wasmblock" = "0.0"
+"rand" = "0.4.0-pre.0"
