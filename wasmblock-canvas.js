@@ -13,7 +13,7 @@ WasmBlock((module) => {
       contextStorage[ctx].fillStyle = style;
     },
     wasmblock_canvas_set_fill_style_color: function(ctx, r,g,b,a) {
-      contextStorage[ctx].fillStyle = `rgba(${r},${g},${b},${a})`;
+      contextStorage[ctx].fillStyle = 'rgba(' + [r,g,b,a].join() + ')';
     },
     wasmblock_canvas_fill_rect: function(ctx,x,y,width,height) {
       contextStorage[ctx].fillRect(x,y,width,height);
