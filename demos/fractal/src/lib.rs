@@ -91,7 +91,7 @@ pub fn start() -> () {
             let point = pixel_to_point(bounds,(column,row),upper_left,lower_right);
             let escape_limit = 255;
             let v = match escape_time(point, escape_limit) {
-                //if it didn't escape to invite within our limit make black
+                //if it didn't escape to infinity within our limit make black
                 None => 0,
                 //if it went to infinity fast, lets make it whiter
                 Some(count) => (255 - count) as u8
