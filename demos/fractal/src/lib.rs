@@ -1,7 +1,6 @@
 #[macro_use(wasmblock_setup)]
 extern crate wasmblock;
 
-//using special macros for global state, see below
 use std::mem;
 use std::os::raw::{c_char,c_void};
 use std::ffi::{CString};
@@ -18,6 +17,7 @@ struct Complex {
     im: f64
 }
 
+//need to be able to add complex
 impl Add<Complex> for Complex {
     type Output = Complex;
 
@@ -27,6 +27,7 @@ impl Add<Complex> for Complex {
     }
 }
 
+//need to be able to multiply complex
 impl Mul<Complex> for Complex {
     type Output = Complex;
 
@@ -50,6 +51,7 @@ impl Complex {
     }
 }
 
+// determine if squaring a complex number goes to infinity with a cut off limit
 fn escape_time(c: Complex, limit: u32) -> Option<u32> {
         let mut z = Complex { re: 0.0, im: 0.0};
         for i in 0..limit {
@@ -61,6 +63,7 @@ fn escape_time(c: Complex, limit: u32) -> Option<u32> {
         None
 }
 
+//interpolate pixel to complex point
 fn pixel_to_point(bounds:(usize,usize),pixel:(usize,usize),upper_left:Complex,lower_right:Complex) -> Complex {
     let (width,height) = (lower_right.re - upper_left.re, lower_right.im - upper_left.im);
     Complex {
@@ -78,6 +81,8 @@ pub fn start() -> () {
     dom::set_attribute("#screen","width","600");
     dom::set_attribute("#screen","height","400");
     let ctx = canvas::get_context("#screen");
+    
+    // lets interpolate between these complex numbers and see how fast they go out to infinity when squared
     let upper_left = Complex{re:-1.2,im:0.35};
     let lower_right = Complex{re:-1.0,im:0.2};
     let bounds = (600,400);
