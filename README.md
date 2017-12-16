@@ -9,7 +9,7 @@
 
 # Hello World
 
-[Demo](https://wasmblock.github.io/WasmBlock/helloworld/index.html)
+[Demo](https://wasmblock.github.io/WasmBlock/demos/helloworld/index.html)
 
 index.html
 ```html
@@ -198,7 +198,7 @@ extern {
 }
 ```
 
-All these functions work off a valid [css selector](https://www.w3schools.com/cssref/css_selectors.asp) as the dom target. Check out the [tic tac toe](https://github.com/WasmBlock/WasmBlock/tree/master/tictactoe/src/lib.rs) demo to see examples of how to use this API. And also look how
+All these functions work off a valid [css selector](https://www.w3schools.com/cssref/css_selectors.asp) as the dom target. Check out the [tic tac toe](https://github.com/WasmBlock/WasmBlock/tree/master/demos/tictactoe/src/lib.rs) demo to see examples of how to use this API. And also look how
 
 # The Bigger Vision
 
