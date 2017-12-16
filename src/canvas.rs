@@ -46,7 +46,7 @@ pub fn fill_rect(ctx: u32, x:f32, y:f32, width:f32, height:f32){
 }
 
 #[inline]
-pub fn put_image_data(ctx: u32, pixel: Vec<u8>, x:i32,y:i32,width:i32,height:i32) {
+pub fn put_image_data(ctx: u32, pixel: &Vec<u8>, x:i32,y:i32,width:i32,height:i32) {
     unsafe {
         let pix = pixel.clone();
         let l = pix.len();

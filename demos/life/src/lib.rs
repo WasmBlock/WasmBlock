@@ -7,47 +7,57 @@ use wasmblock::{dom,canvas,console,timing};
 wasmblock_setup!();
 
 struct AppState {
-    ctx: u32
+    ctx: u32,
+    width: usize,
+    height: usize,
+    pixels: Vec<u8>
 }
+
+const  PIXEL_SIZE: usize = 4;
 
 //we can't have mutable statics by default so we use this to enable it
 thread_local! {
     static APP_STATE: RefCell<AppState> = RefCell::new(
         AppState {
-            ctx: 0
+            ctx: 0,
+            pixels: vec![0 as u8],
+            width: 1,
+            height: 1
         }
     );
 }
 
-fn render(ctx:u32) {
-    let bounds = (600,400);
-    let width : f32 = bounds.0 as f32;
-    let height : f32 = bounds.1 as f32;
-    let pixel_size = 4;
-    let mut pixels = vec![0 as u8;bounds.0*bounds.1*pixel_size];
-    for column in 0..bounds.0 {
-        for row in 0..bounds.1 {
+fn render(app_state:&mut AppState) {
+    let width : f32 = app_state.width as f32;
+    let height : f32 = app_state.height as f32;
+
+    for column in 0..app_state.width {
+        for row in 0..app_state.height {
             let x = column as f32;
             let y = row as f32;
-            pixels[(bounds.0*row+column)*pixel_size]   = (x/width*255.0) as u8;
-            pixels[(bounds.0*row+column)*pixel_size+1] = (y/height*255.0) as u8;
-            pixels[(bounds.0*row+column)*pixel_size+2] = 0;
-            pixels[(bounds.0*row+column)*pixel_size+3] = 255;
+            app_state.pixels[(app_state.width*row+column)*PIXEL_SIZE]   = (x/width*255.0) as u8;
+            app_state.pixels[(app_state.width*row+column)*PIXEL_SIZE+1] = (y/height*255.0) as u8;
+            app_state.pixels[(app_state.width*row+column)*PIXEL_SIZE+2] = 0;
+            app_state.pixels[(app_state.width*row+column)*PIXEL_SIZE+3] = 255;
         }
     };
-    canvas::put_image_data(ctx,pixels,0,0,bounds.0 as i32,bounds.1 as i32);
+    canvas::put_image_data(app_state.ctx,&app_state.pixels,0,0,app_state.width as i32,app_state.height as i32);
 }
 
 #[no_mangle]
 pub fn start() {
     console::time();
     dom::create_element("body","style","game_styles");
-    dom::set_inner_html("#game_styles",include_str!("fire.css"));
+    dom::set_inner_html("#game_styles",include_str!("life.css"));
     dom::create_element("body","canvas","screen");
+    let dimensions = (600,400);
     dom::set_attribute("#screen","width","600");
     dom::set_attribute("#screen","height","400");
     APP_STATE.with(|app_state_cell| {
         let app_state = &mut app_state_cell.borrow_mut();
+        app_state.width= dimensions.0;
+        app_state.height= dimensions.1;
+        app_state.pixels = vec![0 as u8;dimensions.0*dimensions.1*PIXEL_SIZE];
         //store a reference to canvas once so we can reuse
         app_state.ctx = canvas::get_context("#screen");
     });
@@ -59,7 +69,7 @@ pub fn run() -> () {
     console::time();
     APP_STATE.with(|app_state_cell| {
         let app_state = &mut app_state_cell.borrow_mut();
-        render(app_state.ctx);
+        render(app_state);
     });
     console::time_end();
     timing::request_animation_frame("run");
