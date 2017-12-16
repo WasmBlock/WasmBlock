@@ -33,7 +33,7 @@ impl Mul<Complex> for Complex {
 
     #[inline]
     fn mul(self, other: Complex) -> Complex {
-        let re = self.re.clone() * other.re.clone() - self.im.clone() * other.im.clone();
+        let re = self.re * other.re - self.im * other.im;
         let im = self.re * other.im + self.im * other.re;
         Complex::new(re, im)
     }
@@ -47,7 +47,7 @@ impl Complex {
 
     #[inline]
     pub fn norm_sqr(&self) -> f64 {
-        self.re.clone() * self.re.clone() + self.im.clone() * self.im.clone()
+        self.re * self.re + self.im * self.im
     }
 }
 
@@ -81,7 +81,7 @@ pub fn start() -> () {
     dom::set_attribute("#screen","width","600");
     dom::set_attribute("#screen","height","400");
     let ctx = canvas::get_context("#screen");
-    
+
     // lets interpolate between these complex numbers and see how fast they go out to infinity when squared
     let upper_left = Complex{re:-1.2,im:0.35};
     let lower_right = Complex{re:-1.0,im:0.2};
